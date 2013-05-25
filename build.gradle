@@ -24,6 +24,7 @@ ext {
     logbackVersion = '1.0.12'
     slf4jVersion = '1.7.5'
     spockVersion = '0.7-groovy-2.0'
+    hystrixVersion = '1.2.16'
 }
 
 defaultTasks 'clean', 'projectReport', 'build'
@@ -51,10 +52,11 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}:indy"
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
     compile "org.slf4j:slf4j-ext:${slf4jVersion}"
-    compile "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-    compile "ch.qos.logback:logback-core:${logbackVersion}"
-    compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    compile "com.netflix.hystrix:hystrix-core:${hystrixVersion}"
 
+    runtime "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
+    runtime "ch.qos.logback:logback-core:${logbackVersion}"
+    runtime "ch.qos.logback:logback-classic:${logbackVersion}"
     runtime "org.slf4j:jul-to-slf4j:${slf4jVersion}"
     runtime "org.slf4j:log4j-over-slf4j:${slf4jVersion}"
 
