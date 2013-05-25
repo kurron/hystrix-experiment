@@ -17,6 +17,8 @@ package org.kurron.hystrix
 
 import spock.lang.Specification
 
+import java.util.concurrent.Future
+
 /**
  * Learning test of the HystrixCommand object.
  */
@@ -32,6 +34,18 @@ class HystrixCommandUnitTest  extends Specification {
         then:
         println results
         assert results.contains( 'Logan' )
+    }
+
+    def 'execute an asynchronous command'() {
+        given:
+        CommandHelloWorld sut = new CommandHelloWorld( 'Devan' )
+
+        when:
+        Future<String> future = sut.queue()
+        String results = future.get()
+        then:
+        println results
+        assert results.contains( 'Devan' )
     }
 
 }
