@@ -15,23 +15,22 @@
  ******************************************************************************/
 package org.kurron.hystrix
 
-import spock.lang.Specification
+import com.netflix.hystrix.HystrixCommand
+import com.netflix.hystrix.HystrixCommandGroupKey
 
 /**
- * Learning test of the HystrixCommand object.
+ * Simple usage of the HystrixCommand.
  */
-class HystrixCommandUnitTest  extends Specification {
+class CommandHelloWorld extends HystrixCommand<String> {
+    String name
 
-    def 'execute a synchronous command'() {
-        given:
-        CommandHelloWorld sut = new CommandHelloWorld( 'Logan' )
-
-        when:
-        String results = sut.execute()
-
-        then:
-        println results
-        assert results.contains( 'Logan' )
+    CommandHelloWorld( String name ) {
+        super( HystrixCommandGroupKey.Factory.asKey( "ExampleGroup" ) )
+        this.name = name
     }
 
+    @Override
+    protected String run() throws Exception {
+        "Hello $name!"
+    }
 }

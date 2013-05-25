@@ -13,25 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package org.kurron.hystrix
 
-import spock.lang.Specification
+import static ch.qos.logback.classic.Level.ALL
+import static ch.qos.logback.classic.Level.INFO
 
-/**
- * Learning test of the HystrixCommand object.
- */
-class HystrixCommandUnitTest  extends Specification {
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder
+import ch.qos.logback.classic.filter.ThresholdFilter
+import ch.qos.logback.core.ConsoleAppender
 
-    def 'execute a synchronous command'() {
-        given:
-        CommandHelloWorld sut = new CommandHelloWorld( 'Logan' )
-
-        when:
-        String results = sut.execute()
-
-        then:
-        println results
-        assert results.contains( 'Logan' )
+context.name = "Hystrix"
+def MESSAGE_FORMAT = "%contextName %5.5relative %.-1level %35.35logger{0} %message %throwable{short}%n"
+def consoleAppender = "CONSOLE"
+appender(consoleAppender, ConsoleAppender) {
+    encoder(PatternLayoutEncoder) {
+        pattern = "${MESSAGE_FORMAT}"
     }
-
 }
+logger("org.kurron", ALL)
+root(INFO, [consoleAppender])
